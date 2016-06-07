@@ -10,49 +10,45 @@ import { StudentService } from '../../services/student';
 })
 
 export class StudentDetailComponent implements OnInit {
-    @Input() student: Student;
-    @Input() students: Student[];
+    student: Student;
+    // students: Student[];
     @Output() close = new EventEmitter();
-    navigated = false;
+    //navigated = false;
     error: any;
     
     constructor(private studentService: StudentService, private routeParams: RouteParams){}
     
     ngOnInit(){
-        this.studentService.getStudents().subscribe(
-            students => this.students = students,
-            error => console.log(<any>error)
-        )
-        
-        this.navigated = true;
+        // this.studentService.getStudents().subscribe(
+        //     students => this.students = students,
+        //     error => console.log(<any>error)
+        // )
+        //this.navigated = true;
         this.studentService.getStudent(this.routeParams.get('id')).subscribe(student => this.student = student);
         
     }
     
     save(){
         this.studentService.putStudent(this.student).subscribe(
-            student => this.students.forEach((studenti, i) => {
-                if(studenti._id === student._id){
-                    this.students[i] = student;
-                }
-            }),
-            error => console.log(<any>error)
+            student => this.student = student,
+            error =>  console.log(<any>error)
         );
+        
+        // this.studentService.putStudent(this.student).subscribe(
+        //     student => this.students.forEach((studenti, i) => {
+        //         if(studenti._id === student._id){
+        //             this.students[i] = student;
+        //         }
+        //     }),
+        //     error => console.log(<any>error)
+        // );
         this.goBack(this.student);
     }
-    
-    /*save(){
-        this.studentService.save(this.student).then(student => {
-            this.student = student;
-            this.goBack(student);
-        }).catch(error => this.error = error);
-    }*/
-    
-    
+
     goBack(savedStudent: Student = null) {
         this.close.emit(savedStudent);
-        if(this.navigated) {
+        //if(this.navigated) {
             window.history.back();
-        }
+        //}
     }
 }

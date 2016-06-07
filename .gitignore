@@ -19,3 +19,4 @@ client/app/services/*.js
 client/bower_components/*
 client/npm-debug.log
 server/node_modules/*
+.idea/*

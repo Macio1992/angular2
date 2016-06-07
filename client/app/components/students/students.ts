@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router-deprecated';
 
 import { Student } from '../../models/student';
@@ -14,16 +14,10 @@ import { StudentFormComponent } from '../student-form/student-form';
     directives: [StudentDetailComponent, SelectStudentComponent, StudentFormComponent]
 })
 
-export class StudentsComponent implements OnChanges, OnInit {
+export class StudentsComponent implements OnInit {
     students = new Array<Student>();
-    // addingStudent: Student;
-    //error: any;
     selectedStudent: Student;
     aStudent = false;
-    
-    constructor(private router: Router, private studentService: StudentService){
-        
-    }
     
     getStudents(){
         this.studentService.getStudents().subscribe(
@@ -32,11 +26,13 @@ export class StudentsComponent implements OnChanges, OnInit {
         )
     }
     
-    
+    constructor(private router: Router, private studentService: StudentService){
+        router.root.subscribe(route => this.getStudents());
+    }
     
     addStudent(){
         this.aStudent = true;
-        //this.selectedStudent = null;
+        this.selectedStudent = null;
     }
     
     delete(studentId: string) {
@@ -49,10 +45,8 @@ export class StudentsComponent implements OnChanges, OnInit {
     }
     
     close(savedStudent: Student) {
-        console.log("fdfsdfsfsdf");
-        // this.aStudent = false;
-        // //this.students.push(savedStudent);
-        // if(savedStudent) this.getStudents();
+        this.getStudents();
+        this.aStudent = false;
     }
     
     gotoDetail(student: Student){
@@ -66,14 +60,9 @@ export class StudentsComponent implements OnChanges, OnInit {
         this.aStudent = false;
     }
     
-    ngOnChanges(): any{
-        this.getStudents();
-    }
-    
     ngOnInit(): any{
         this.getStudents();
     }
-    
     
 };
     
