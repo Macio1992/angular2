@@ -1,0 +1,10 @@
+#typesoftask{
+    border: 1px solid red;
+    min-height: 400px;
+}
+
+#makingtask{
+    border: 1px solid green;
+    min-height: 400px;
+    margin: 3px; 
+}

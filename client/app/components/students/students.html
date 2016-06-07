@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            
+            <!--<input [(ngModel)]="addingStudent.name" placeholder="name">
+            <input [(ngModel)]="addingStudent.lastName" placeholder="lastName">
+            <input [(ngModel)]="addingStudent.email" placeholder="e-mail">-->
+            <button (click)="addStudent()">Add new student</button>
+            
+            <ul>
+                <li *ngFor="let student of students" (click)="onSelect(student)">
+                    <span>{{student.name}}</span>
+                    <span>{{student.lastName}}</span>
+                    <span>{{student.email}}</span>
+                    <button class="delete-button" (click)="delete(student._id)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                    <button class="edit-button" (click)="gotoDetail(student)">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </button>
+                </li>
+                
+            </ul>
+            <!--<ul class="students">
+                <li *ngFor="let student of students" (click)="onSelect(student)">
+                    {{student.name}}
+                    <button class="delete-button" (click)="delete(student, $event)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                    <button class="edit-button" (click)="gotoDetail(student)">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </button>
+                </li>
+            </ul>-->
+        </div>
+        
+        <div class="col-md-6" *ngIf="selectedStudent">
+            <select-student [student] = "selectedStudent"></select-student>
+        </div>
+        <div class="col-md-6" *ngIf="aStudent">
+            <h2>Add new student</h2>
+            <student-form [students]="students"></student-form>
+            <!--<my-student-detail (close)="close($event)" [students]="students"></my-student-detail>-->
+        </div>
+    </div>
+</div>

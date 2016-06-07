@@ -1,0 +1,15 @@
+<div *ngIf="student">
+    <p>{{student.name}}</p>
+    <p>{{student.lastName}}</p>
+    <p>{{student.email}}</p>
+    <div>
+        <label>name: </label>
+        <input [(ngModel)]="student.name" placeholder="name">
+        <label>lastName: </label>
+        <input [(ngModel)]="student.lastName" placeholder="lastName">
+        <label>name: </label>
+        <input [(ngModel)]="student.email" placeholder="email">
+    </div>
+    <button (click)="goBack()" class="btn-default">Back</button>
+    <button (click)="save()" class="btn-default">Save</button>
+</div>

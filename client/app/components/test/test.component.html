@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div>
+                <h1>Wikipedia Demo</h1>
+                <p><i>Fetches after each keystroke</i></p>
+                <input #term (keyup)="search(term.value)"/>
+                <ul>
+                    <li *ngFor="let item of items | async" (click)="onClick(item)">{{item}} </li>
+                </ul>
+            </div>
+            <div >
+                <ul id="typesoftask" [dragula]='"first-bag"'>
+                    <li>Translate vocabulary</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="col-md-8">
+            <div id="makingtask" [dragula]='"first-bag"'>
+                
+            </div>
+            
+        </div>
+    </div>
+</div>
