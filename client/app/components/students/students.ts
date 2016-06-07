@@ -7,28 +7,36 @@ import { StudentDetailComponent } from '../student-detail/student-detail';
 import { Mark } from '../../models/mark';
 import { SelectStudentComponent } from '../select-student/select-student';
 import { StudentFormComponent } from '../student-form/student-form';
+import {GradeService} from "../../services/grades";
+import {Grade} from "../../models/grade";
 
 @Component({
     selector: 'my-students',
     templateUrl: 'app/components/students/students.html',
-    directives: [StudentDetailComponent, SelectStudentComponent, StudentFormComponent]
+    directives: [StudentDetailComponent, SelectStudentComponent, StudentFormComponent],
+    providers: [GradeService]
 })
 
 export class StudentsComponent implements OnInit {
     students = new Array<Student>();
     selectedStudent: Student;
     aStudent = false;
+    grades = new Array<Grade>();
     
-    getStudents(){
-        this.studentService.getStudents().subscribe(
+    
+
+    constructor(private router: Router, private studentService: StudentService, private gradeService: GradeService){
+        
+    }
+    
+    getStudents(gradeId: string){
+        this.studentService.getStudents(gradeId).subscribe(
             students => this.students = students,
             error => console.log(<any>error)
         )
     }
     
-    constructor(private router: Router, private studentService: StudentService){
-        router.root.subscribe(route => this.getStudents());
-    }
+    
     
     addStudent(){
         this.aStudent = true;
@@ -44,10 +52,10 @@ export class StudentsComponent implements OnInit {
         );
     }
     
-    close(savedStudent: Student) {
-        this.getStudents();
-        this.aStudent = false;
-    }
+    // close(savedStudent: Student) {
+    //     this.getStudents();
+    //     this.aStudent = false;
+    // }
     
     gotoDetail(student: Student){
         let link = ['StudentDetail', {id: student._id}];
@@ -60,8 +68,19 @@ export class StudentsComponent implements OnInit {
         this.aStudent = false;
     }
     
+    ngOnChanges(): any{
+    }
+
+    getGrades() {
+        this.gradeService.getGrades().subscribe(
+            grades => this.grades = grades,
+            error => console.log(<any>error)
+        );
+    }
+    
     ngOnInit(): any{
-        this.getStudents();
+        this.getStudents(null);
+        this.getGrades();
     }
     
 };
