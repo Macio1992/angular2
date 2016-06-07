@@ -1,10 +1,26 @@
 #typesoftask{
     border: 1px solid red;
     min-height: 400px;
+    padding-left: 0px;
+}
+
+.drag-item {
+    background: blueviolet;
+    padding: 10px;
+    text-align: center;
+    margin: 10px;
 }
 
 #makingtask{
     border: 1px solid green;
     min-height: 400px;
-    margin: 3px; 
+    margin: 3px;
+    padding-left: 0px;
+}
+
+#makingtask .drag-item {
+    background: whitesmoke;
+    padding: 10px;
+    text-align: center;
+    margin: 10px;
 }
