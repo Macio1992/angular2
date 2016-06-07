@@ -4,6 +4,17 @@ var router = express.Router();
 var Student = require('../models/student');
 var Mark = require('../models/mark');
 
+
+router.route('/marks/:mark_id')
+    .delete(function(req, res){
+    Mark.remove({
+        _id: req.params.mark_id
+    }, function(err, student){
+        if(err)
+            res.send(err);
+        res.json({ message: "Succesfully deleted"});
+    })
+});
     
 router.route('/students/:student_id/marks')
     .post(function(req,res){
@@ -28,29 +39,6 @@ router.route('/students/:student_id/marks')
                 re.send(err);
             res.json(marks);
         })
-     })
-     .put(function(req, res){
-         Student.findById(req.params.student_id, function(err, student){
-             if(err)
-                res.send(err);
-             student.name = req.body.name;
-             student.lastName = req.body.lastName;
-             student.email = req.body.email;
-             student.save(function(err){
-                 if(err)
-                    res.send(err);
-                 res.json({message: 'Student updated!'});
-             });
-         });
-     })
-     .delete(function(req, res){
-         Student.remove({
-             _id: req.params.student_id
-         }, function(err, student){
-             if(err)
-                res.send(err);
-             res.json({ message: "Succesfully deleted"});
-         })
      });
      
 module.exports = router;
