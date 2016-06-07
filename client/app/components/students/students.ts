@@ -7,11 +7,14 @@ import { StudentDetailComponent } from '../student-detail/student-detail';
 import { Mark } from '../../models/mark';
 import { SelectStudentComponent } from '../select-student/select-student';
 import { StudentFormComponent } from '../student-form/student-form';
+import {GradeService} from "../../services/grades";
+import {Grade} from "../../models/grade";
 
 @Component({
     selector: 'my-students',
     templateUrl: 'app/components/students/students.html',
-    directives: [StudentDetailComponent, SelectStudentComponent, StudentFormComponent]
+    directives: [StudentDetailComponent, SelectStudentComponent, StudentFormComponent],
+    providers: [GradeService]
 })
 
 export class StudentsComponent implements OnChanges, OnInit {
@@ -20,13 +23,14 @@ export class StudentsComponent implements OnChanges, OnInit {
     //error: any;
     selectedStudent: Student;
     aStudent = false;
+    grades = new Array<Grade>();
     
-    constructor(private router: Router, private studentService: StudentService){
+    constructor(private router: Router, private studentService: StudentService, private gradeService: GradeService){
         
     }
     
-    getStudents(){
-        this.studentService.getStudents().subscribe(
+    getStudents(gradeId: string){
+        this.studentService.getStudents(gradeId).subscribe(
             students => this.students = students,
             error => console.log(<any>error)
         )
@@ -67,11 +71,18 @@ export class StudentsComponent implements OnChanges, OnInit {
     }
     
     ngOnChanges(): any{
-        this.getStudents();
+    }
+
+    getGrades() {
+        this.gradeService.getGrades().subscribe(
+            grades => this.grades = grades,
+            error => console.log(<any>error)
+        );
     }
     
     ngOnInit(): any{
-        this.getStudents();
+        this.getStudents(null);
+        this.getGrades();
     }
     
     

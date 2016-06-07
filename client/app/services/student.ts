@@ -15,8 +15,10 @@ export class StudentService {
     
     constructor(private http: Http) {}
     
-    getStudents(): Observable<Array<Student>>{
-        return this.http.get(this.studentsUrl).map(this.extractData);
+    getStudents(gradeId: string): Observable<Array<Student>>{
+        var url = this.studentsUrl;
+        if (gradeId) url+= "?gradeId=" + gradeId;
+        return this.http.get(url).map(this.extractData);
     }
     
     private extractData(res: Response) {

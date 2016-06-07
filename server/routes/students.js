@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 var Student = require('../models/student');
 
 router.route('/students')
@@ -12,16 +13,37 @@ router.route('/students')
         student.save(function(err) {
             if(err)
                 res.send(err);
-            res.json({ message: 'Student created'});
+            res.json(student);
         })
     })
     
     .get(function(req, res){
-        Student.find(function(err, students){
-            if(err)
+
+        var gradeId = req.query.gradeId;
+
+        var query = Student.find();
+        console.log("gradeId " + gradeId)
+        query.populate('grade', 'name');
+
+        query.exec(function(err, students) {
+            if (err)
                 res.send(err);
-            res.json(students);
+
+            if (gradeId) {
+                var studentList = [];
+                students.forEach(function (item) {
+
+                    console.log("gradeId " + " " + item.grade + " " + gradeId)
+                    if (item.grade && item.grade._id == gradeId) {
+                        studentList.push(item);
+                    }
+                })
+                res.json(studentList);
+            } else {
+                res.json(students);
+            }
         });
+
     });
     
 router.route('/students/:student_id')

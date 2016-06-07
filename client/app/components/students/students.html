@@ -6,12 +6,17 @@
             <input [(ngModel)]="addingStudent.lastName" placeholder="lastName">
             <input [(ngModel)]="addingStudent.email" placeholder="e-mail">-->
             <button (click)="addStudent()">Add new student</button>
-            
+
+            <div>
+                <button *ngFor="let grade of grades" (click)="getStudents(grade._id)">{{ grade.name }}</button>
+                <button (click)="getStudents(null)">ALL</button>
+            </div>
             <ul>
                 <li *ngFor="let student of students" (click)="onSelect(student)">
                     <span>{{student.name}}</span>
                     <span>{{student.lastName}}</span>
                     <span>{{student.email}}</span>
+                    <span *ngIf="student.grade">{{student.grade.name}}</span>
                     <button class="delete-button" (click)="delete(student._id)">
                         <span class="glyphicon glyphicon-remove"></span>
                     </button>
